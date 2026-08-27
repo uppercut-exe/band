@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>band. — Ecommerce Development, Design & Media Buying</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F6F4F0;--bg2:#EDEAE4;--bg3:#E5E1DA;
+  --ink:#1a1a1a;--ink2:#333;--muted:#888;--muted2:#bbb;
+  --line:#d4d0c8;--line2:#ccc8be;
+  --sans:'Inter',system-ui,sans-serif;
+  --serif:'Instrument Serif',Georgia,serif;
+  --accent:#c9a96e;
+}
+html{font-size:16px;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:var(--bg);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+::selection{background:var(--ink);color:var(--bg)}
+
+/* ===== PRELOADER ===== */
+.preloader{position:fixed;inset:0;background:var(--bg);z-index:10000;display:flex;align-items:center;justify-content:center;transition:opacity .6s .2s,visibility .6s .2s}
+.preloader.done{opacity:0;visibility:hidden;pointer-events:none}
+.preloader svg{width:200px;height:auto}
+.preloader .pl-path{stroke-dasharray:800;stroke-dashoffset:800;animation:plDraw 1.6s cubic-bezier(.4,0,.2,1) forwards}
+.preloader .pl-dot{opacity:0;animation:plDot .3s ease forwards 1.5s}
+.preloader .pl-line1{animation-delay:0s}
+.preloader .pl-line2{animation-delay:.15s}
+.preloader .pl-line3{animation-delay:.3s}
+.preloader .pl-line4{animation-delay:.45s}
+@keyframes plDraw{to{stroke-dashoffset:0}}
+@keyframes plDot{to{opacity:1}}
+
+/* ===== NAV ===== */
+nav{position:fixed;top:0;left:0;width:100%;padding:1.25rem 2.5rem;display:flex;justify-content:space-between;align-items:center;z-index:100;background:rgba(246,244,240,0);backdrop-filter:blur(0px);border-bottom:1px solid transparent;transition:all .4s}
+nav.scrolled{background:rgba(246,244,240,.92);backdrop-filter:blur(16px);border-color:var(--line)}
+.nav-logo svg{height:28px;width:auto}
+.nav-links{display:flex;gap:2rem;font-size:.7rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.nav-links a{position:relative;transition:color .3s}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--ink);transition:width .35s cubic-bezier(.16,1,.3,1)}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
+@media(max-width:768px){.nav-links{display:none}nav{padding:1rem 1.25rem}}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 2.5rem 4rem;position:relative;overflow:hidden}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem}
+.hero-text{max-width:750px;position:relative;z-index:2}
+.hero-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.2em;color:var(--muted);margin-bottom:1.5rem;font-weight:500}
+.hero-title{font-family:var(--serif);font-size:clamp(3.2rem,7.5vw,7rem);font-weight:400;line-height:.95;letter-spacing:-.03em}
+.hero-title em{font-style:italic}
+.hero-title .thin{font-weight:300;color:var(--muted)}
+.hero-title .word{display:inline-block;overflow:hidden}
+.hero-title .word-inner{display:inline-block;transform:translateY(110%);animation:wordReveal .8s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes wordReveal{to{transform:translateY(0)}}
+
+.hero-chars{position:relative;flex-shrink:0;width:460px;height:420px}
+.hero-chars img{position:absolute;bottom:0;height:360px;object-fit:contain;filter:drop-shadow(0 15px 30px rgba(0,0,0,.08));transition:transform .7s cubic-bezier(.16,1,.3,1),opacity .5s}
+.hero-chars .char-alerta{left:0;z-index:1;height:340px;opacity:.85;animation:charFloat 6s ease-in-out infinite alternate}
+.hero-chars .char-mamdouh{left:50%;transform:translateX(-50%);z-index:3;animation:charFloatC 6s ease-in-out infinite alternate .5s}
+.hero-chars .char-alaa{right:0;z-index:2;height:350px;opacity:.85;animation:charFloat 6s ease-in-out infinite alternate 1s}
+@keyframes charFloat{0%{transform:translateY(0)}100%{transform:translateY(-8px)}}
+@keyframes charFloatC{0%{transform:translateX(-50%) translateY(0)}100%{transform:translateX(-50%) translateY(-8px)}}
+.hero-chars:hover .char-alerta{transform:translateX(-12px) rotate(-2deg);opacity:1}
+.hero-chars:hover .char-mamdouh{transform:translateX(-50%) translateY(-6px) scale(1.03)}
+.hero-chars:hover .char-alaa{transform:translateX(12px) rotate(2deg);opacity:1}
+
+.hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--line)}
+.hero-desc{max-width:440px;font-size:.88rem;color:var(--muted);line-height:1.7;font-weight:300}
+.hero-scroll{font-size:.6rem;text-transform:uppercase;letter-spacing:.2em;color:var(--muted2);display:flex;align-items:center;gap:.5rem}
+.hero-scroll::before{content:'';width:30px;height:1px;background:var(--muted2);animation:scrollPulse 2s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{width:30px;opacity:1}50%{width:50px;opacity:.5}}
+@media(max-width:768px){
+  .hero{padding:7rem 1.25rem 3rem}.hero-top{flex-direction:column;align-items:flex-start}
+  .hero-chars{width:300px;height:300px;align-self:center;margin-top:1rem}
+  .hero-chars img{height:260px}.hero-chars .char-alerta{height:240px}.hero-chars .char-alaa{height:250px}
+  .hero-bottom{flex-direction:column;gap:1.5rem;align-items:flex-start}
+}
+
+/* ===== MARQUEE ===== */
+.marquee-wrap{padding:1.1rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden}
+.marquee{display:flex;gap:2.5rem;white-space:nowrap;will-change:transform}
+.marquee span{font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);font-weight:500;flex-shrink:0}
+.marquee .dot{color:var(--line2)}
+
+/* ===== SECTIONS ===== */
+section{padding:7rem 2.5rem}
+.s-label{font-size:.6rem;text-transform:uppercase;letter-spacing:.25em;color:var(--muted);margin-bottom:1rem;font-weight:500}
+.s-title{font-family:var(--serif);font-size:clamp(2rem,4.5vw,3.5rem);font-weight:400;line-height:1.1;letter-spacing:-.02em;max-width:700px}
+.s-title em{font-style:italic}
+@media(max-width:768px){section{padding:4rem 1.25rem}}
+
+/* ===== WORK SHOWCASE ===== */
+.work-section{background:var(--ink);color:var(--bg);padding:7rem 0;overflow:hidden}
+.work-section .s-label,.work-section .s-title{padding:0 2.5rem}
+.work-section .s-label{color:var(--muted)}
+.work-section .s-title{color:var(--bg);margin-bottom:3rem}
+.work-track{display:flex;gap:2rem;padding:0 2.5rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;cursor:grab}
+.work-track::-webkit-scrollbar{display:none}
+.work-card{flex-shrink:0;width:420px;scroll-snap-align:start;cursor:pointer}
+.work-card-inner{position:relative;overflow:hidden;border-radius:8px;transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s}
+.work-card:hover .work-card-inner{transform:translateY(-6px);box-shadow:0 25px 50px rgba(0,0,0,.35)}
+.work-card img{width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform .6s cubic-bezier(.16,1,.3,1);filter:brightness(.92)}
+.work-card:hover img{transform:scale(1.06);filter:brightness(1)}
+.work-card .work-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.85));opacity:0;transition:opacity .4s;display:flex;align-items:flex-end;padding:1.5rem}
+.work-card:hover .work-overlay{opacity:1}
+.overlay-text{transform:translateY(15px);transition:transform .4s cubic-bezier(.16,1,.3,1);color:#fff}
+.work-card:hover .overlay-text{transform:translateY(0)}
+.overlay-text strong{font-family:var(--serif);font-style:italic;font-size:1.1rem;display:block;margin-bottom:.3rem}
+.overlay-text span{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;opacity:.7;font-weight:300}
+.overlay-text .view-project{display:inline-block;margin-top:.5rem;font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;padding:.35rem .8rem;border:1px solid rgba(255,255,255,.3);color:#fff;transition:all .3s}
+.overlay-text .view-project:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6)}
+.work-hint{padding:2rem 2.5rem 0;font-size:.6rem;text-transform:uppercase;letter-spacing:.2em;color:#555;display:flex;align-items:center;gap:.5rem}
+.work-hint::after{content:'';flex:1;height:1px;background:#333}
+@media(max-width:768px){.work-card{width:320px}.work-track{padding:0 1.25rem}.work-hint{padding:1.5rem 1.25rem 0}}
+
+/* ===== BRAND SHOWCASE ===== */
+.brand-section{padding:7rem 0;overflow:hidden}
+.brand-section .s-label,.brand-section .s-title{padding:0 2.5rem}
+.brand-section .s-title{margin-bottom:3rem}
+.brand-track{display:flex;gap:1.5rem;padding:0 2.5rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;cursor:grab}
+.brand-track::-webkit-scrollbar{display:none}
+.brand-card{flex-shrink:0;width:420px;scroll-snap-align:start;background:var(--bg2);border-radius:8px;overflow:hidden;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s;cursor:pointer}
+.brand-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.07)}
+.brand-card img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.brand-card:hover img{transform:scale(1.04)}
+.brand-card .bc-info{padding:1rem 1.25rem}
+.brand-card .bc-name{font-family:var(--serif);font-size:1.1rem;margin-bottom:.25rem}
+.brand-card .bc-type{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:500}
+@media(max-width:768px){.brand-card{width:320px}.brand-track{padding:0 1.25rem}}
+
+/* ===== LIGHTBOX ===== */
+.lightbox{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.lightbox.open{opacity:1;visibility:visible}
+.lightbox-bg{position:absolute;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(8px)}
+.lightbox-close{position:absolute;top:1.5rem;right:2rem;width:40px;height:40px;background:none;border:1px solid rgba(255,255,255,.2);color:#fff;font-size:1.2rem;cursor:pointer;z-index:3;display:flex;align-items:center;justify-content:center;transition:all .3s;border-radius:50%}
+.lightbox-close:hover{border-color:#fff;transform:rotate(90deg)}
+.lightbox-content{position:relative;z-index:2;max-width:900px;width:90%;max-height:85vh;overflow:hidden;display:flex;flex-direction:column}
+.lightbox-header{color:#fff;padding:0 0 1.5rem;flex-shrink:0}
+.lightbox-header h3{font-family:var(--serif);font-size:1.8rem;font-style:italic}
+.lightbox-header span{font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.5);margin-top:.25rem;display:block}
+.lightbox-scroll{overflow-y:auto;flex:1;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}
+.lightbox-scroll::-webkit-scrollbar{width:4px}
+.lightbox-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:2px}
+.lightbox-scroll img{width:100%;border-radius:6px;margin-bottom:1rem;scroll-snap-align:start;opacity:0;transform:translateY(20px);animation:lbImgIn .5s cubic-bezier(.16,1,.3,1) forwards}
+.lightbox-scroll img:nth-child(2){animation-delay:.1s}
+.lightbox-scroll img:nth-child(3){animation-delay:.2s}
+.lightbox-scroll img:nth-child(4){animation-delay:.3s}
+.lightbox-scroll img:nth-child(5){animation-delay:.4s}
+.lightbox-scroll img:nth-child(6){animation-delay:.5s}
+@keyframes lbImgIn{to{opacity:1;transform:translateY(0)}}
+.lightbox-nav{position:absolute;top:50%;z-index:3;width:44px;height:44px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all .3s;transform:translateY(-50%)}
+.lightbox-nav:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.4)}
+.lightbox-nav.prev{left:1rem}
+.lightbox-nav.next{right:1rem}
+.lightbox-counter{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.4);font-size:.65rem;letter-spacing:.1em;z-index:3}
+
+/* ===== TEAM ===== */
+.who-section{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.who-card{padding:3.5rem 2.5rem;position:relative;overflow:hidden;transition:background .4s}
+.who-card:not(:last-child){border-right:1px solid var(--line)}
+.who-card:hover{background:var(--bg2)}
+.who-card .who-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem}
+.who-card .who-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;border:2px solid var(--line);transition:transform .4s cubic-bezier(.16,1,.3,1),border-color .3s}
+.who-card:hover .who-avatar{transform:scale(1.08);border-color:var(--accent)}
+.who-card .who-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.who-card h3{font-family:var(--serif);font-size:1.3rem;font-weight:400}
+.who-card h3 em{font-style:italic}
+.who-card .who-role{font-size:.55rem;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);font-weight:500;margin-top:.1rem}
+.who-card p{color:var(--muted);font-size:.82rem;line-height:1.7;font-weight:300;margin-bottom:.75rem}
+.who-card .tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1.25rem}
+.who-card .tag{padding:.25rem .6rem;border:1px solid var(--line);font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:500;transition:all .3s}
+.who-card:hover .tag{border-color:var(--ink);color:var(--ink)}
+.who-body{margin-top:1.5rem;display:flex;justify-content:center}
+.who-body img{height:260px;object-fit:contain;filter:drop-shadow(0 12px 25px rgba(0,0,0,.06));transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.who-card:hover .who-body img{transform:translateY(-8px) scale(1.03)}
+.alaa-stats{display:flex;gap:1rem;margin-top:1.25rem;padding-top:.75rem;border-top:1px solid var(--line)}
+.alaa-stat{text-align:center;flex:1}
+.alaa-stat .stat-val{font-family:var(--serif);font-size:1.3rem;font-style:italic;color:var(--ink)}
+.alaa-stat .stat-label{font-size:.5rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:.1rem}
+@media(max-width:1024px){
+  .who-section{grid-template-columns:1fr}
+  .who-card:not(:last-child){border-right:none;border-bottom:1px solid var(--line)}
+  .who-card{padding:3rem 1.25rem}
+  .who-body img{height:220px}
+}
+
+/* ===== SERVICES ===== */
+.srv-list{margin-top:3rem}
+.srv{display:grid;grid-template-columns:50px 1fr 1fr;gap:2rem;padding:2.25rem 0;border-top:1px solid var(--line);align-items:start;transition:all .35s cubic-bezier(.16,1,.3,1)}
+.srv:last-child{border-bottom:1px solid var(--line)}
+.srv:hover{background:var(--bg2);margin:0 -2.5rem;padding-left:2.5rem;padding-right:2.5rem;border-radius:4px}
+.srv-num{font-family:var(--serif);font-size:1.3rem;color:var(--muted2);font-style:italic;transition:color .3s}
+.srv:hover .srv-num{color:var(--accent)}
+.srv-name{font-family:var(--serif);font-size:1.6rem;font-weight:400;margin-bottom:.4rem}
+.srv-sub{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:500}
+.srv-desc{color:var(--muted);font-size:.85rem;line-height:1.7;font-weight:300;max-width:400px}
+@media(max-width:768px){.srv{grid-template-columns:1fr;gap:.5rem}.srv:hover{margin:0 -1.25rem;padding-left:1.25rem;padding-right:1.25rem}}
+
+/* ===== CLIENTS ===== */
+.clients-section{background:var(--bg2)}
+.cl-grid{margin-top:2.5rem}
+.cl-row{margin-bottom:2rem}
+.cl-row-label{font-size:.55rem;text-transform:uppercase;letter-spacing:.2em;color:var(--muted2);margin-bottom:.75rem;font-weight:500}
+.cl-names{display:flex;flex-wrap:wrap;gap:.4rem}
+.cl-pill{padding:.45rem 1rem;border:1px solid var(--line);font-size:.78rem;color:var(--ink2);transition:all .3s cubic-bezier(.16,1,.3,1);cursor:default}
+.cl-pill:hover{background:var(--ink);color:var(--bg);border-color:var(--ink);transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.08)}
+
+/* ===== PROCESS ===== */
+.proc-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3.5rem}
+.proc-col h3{font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:.5rem}
+.proc-col>p{color:var(--muted);font-size:.82rem;line-height:1.7;font-weight:300;margin-bottom:1.5rem}
+.p-step{padding:1.1rem 1.25rem;border:1px solid var(--line);margin-bottom:.75rem;transition:all .3s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden}
+.p-step::before{content:'';position:absolute;left:0;top:0;width:0;height:100%;background:var(--bg2);transition:width .4s cubic-bezier(.16,1,.3,1);z-index:-1}
+.p-step:hover::before{width:100%}
+.p-step:hover{border-color:var(--ink);transform:translateX(6px)}
+.p-step strong{display:block;font-size:.82rem;font-weight:600;margin-bottom:.2rem}
+.p-step span{font-size:.78rem;color:var(--muted);font-weight:300}
+@media(max-width:768px){.proc-grid{grid-template-columns:1fr;gap:2.5rem}}
+
+/* ===== NUMBERS ===== */
+.numbers{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;padding:4.5rem 2.5rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center}
+.n-val{font-family:var(--serif);font-size:clamp(2.5rem,4vw,3.5rem);font-weight:400;font-style:italic;line-height:1}
+.n-label{font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);margin-top:.4rem;font-weight:500}
+@media(max-width:768px){.numbers{grid-template-columns:repeat(2,1fr);padding:3rem 1.25rem}}
+
+/* ===== CTA ===== */
+.cta{text-align:center;padding:8rem 2.5rem}
+.cta .s-title{margin:0 auto;max-width:800px;font-size:clamp(2.5rem,6vw,4.5rem)}
+.cta-btn{display:inline-flex;align-items:center;gap:.75rem;margin-top:2.5rem;padding:1rem 2.5rem;background:var(--ink);color:var(--bg);font-size:.75rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer;transition:all .35s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden}
+.cta-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-100%);transition:transform .5s}
+.cta-btn:hover::before{transform:translateX(100%)}
+.cta-btn:hover{background:#333;transform:translateY(-2px);box-shadow:0 10px 25px rgba(0,0,0,.12)}
+.cta-btn svg{width:14px;height:14px;transition:transform .3s}.cta-btn:hover svg{transform:translateX(4px)}
+.cta-sub{margin-top:1.5rem;font-size:.78rem;color:var(--muted);font-weight:300}
+
+/* ===== FOOTER ===== */
+footer{padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);font-size:.65rem;color:var(--muted)}
+.f-links{display:flex;gap:1.5rem}
+.f-links a{position:relative;transition:color .3s}
+.f-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--ink);transition:width .3s cubic-bezier(.16,1,.3,1)}
+.f-links a:hover{color:var(--ink)}
+.f-links a:hover::after{width:100%}
+@media(max-width:768px){footer{flex-direction:column;gap:1rem;text-align:center;padding:2rem 1.25rem}}
+
+/* ===== ANIMATIONS ===== */
+[data-a]{opacity:0;transform:translateY(25px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+[data-a="left"]{transform:translateX(-30px)}
+[data-a="right"]{transform:translateX(30px)}
+[data-a="scale"]{transform:scale(.94)}
+[data-a].in{opacity:1;transform:none}
+[data-a][data-d="1"]{transition-delay:.08s}
+[data-a][data-d="2"]{transition-delay:.16s}
+[data-a][data-d="3"]{transition-delay:.24s}
+[data-a][data-d="4"]{transition-delay:.32s}
+[data-a][data-d="5"]{transition-delay:.4s}
+
+/* LOGO NAV ANIM */
+.logo-draw path{stroke-dasharray:600;stroke-dashoffset:600;animation:drawLogo 1.2s cubic-bezier(.25,.1,.25,1) forwards 2s}
+.logo-draw .dot-circle{opacity:0;animation:dotFade .3s ease forwards 3s}
+@keyframes drawLogo{to{stroke-dashoffset:0}}
+@keyframes dotFade{to{opacity:1}}
+</style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+  <svg viewBox="0 0 240 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path class="pl-path pl-line1" d="M4 4v56M4 36c0-11 8-20 18-20s18 9 18 20-8 20-18 20S4 47 4 36" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="pl-path pl-line2" d="M80 56c0-11-8-20-18-20s-18 9-18 20M80 16v40M62 36c10 0 18 9 18 20" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="pl-path pl-line3" d="M92 56V16M92 36c0-11 8-20 18-20s18 9 18 20v20" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="pl-path pl-line4" d="M164 4v52M164 36c0-11-8-20-18-20s-18 9-18 20 8 20 18 20 18-9 18-20" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle class="pl-dot" cx="184" cy="56" r="5" fill="#1a1a1a"/>
+  </svg>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-draw">
+      <path d="M2 2v28M2 18c0-5.5 4-10 9-10s9 4.5 9 10-4 10-9 10-9-4.5-9-10" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M40 28c0-5.5-4-10-9-10s-9 4.5-9 10M40 8v20M31 18c5 0 9 4.5 9 10" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M46 28V8M46 18c0-5.5 4-10 9-10s9 4.5 9 10v10" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M82 2v26M82 18c0-5.5-4-10-9-10s-9 4.5-9 10 4 10 9 10 9-4.5 9-10" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="92" cy="28" r="3" fill="#1a1a1a" class="dot-circle"/>
+    </svg>
+  </a>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#services">Services</a>
+    <a href="#clients">Clients</a>
+    <a href="#team">Team</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-top">
+    <div class="hero-text">
+      <div class="hero-label" data-a>Ecommerce &middot; Design &middot; Media Buying</div>
+      <h1 class="hero-title" data-a data-d="1">
+        <span class="word"><span class="word-inner">We don't</span></span><br>
+        <span class="word"><span class="word-inner" style="animation-delay:.15s"><em>overthink</em> it.</span></span><br>
+        <span class="word"><span class="word-inner thin" style="animation-delay:.3s">We ship it.</span></span>
+      </h1>
+    </div>
+    <div class="hero-chars" data-a="right" data-d="2">
+      <img class="char-alerta" src="images/designer-full.png" alt="Alerta">
+      <img class="char-mamdouh" src="images/developer-full.png" alt="Mamdouh">
+      <img class="char-alaa" src="images/alaa character.png" alt="Alaa">
+    </div>
+  </div>
+  <div class="hero-bottom" data-a data-d="3">
+    <p class="hero-desc">band is an execution-first agency for brands that already know what they want. We build ecommerce stores, design brand assets, and buy media — fast, clean, no fluff. Over 20 brands across Egypt, the US, UK, and Spain. One standard.</p>
+    <span class="hero-scroll">Scroll to explore</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap"><div class="marquee" id="marquee">
+  <span>Shopify Development</span><span class="dot">/</span><span>Headless Commerce</span><span class="dot">/</span><span>Brand Design</span><span class="dot">/</span><span>Media Buying</span><span class="dot">/</span><span>Creative Direction</span><span class="dot">/</span><span>UI/UX</span><span class="dot">/</span><span>Performance Marketing</span><span class="dot">/</span><span>Alo Yoga</span><span class="dot">/</span><span>Volcom</span><span class="dot">/</span><span>Cole Haan</span><span class="dot">/</span><span>Skechers</span><span class="dot">/</span>
+  <span>Shopify Development</span><span class="dot">/</span><span>Headless Commerce</span><span class="dot">/</span><span>Brand Design</span><span class="dot">/</span><span>Media Buying</span><span class="dot">/</span><span>Creative Direction</span><span class="dot">/</span><span>UI/UX</span><span class="dot">/</span><span>Performance Marketing</span><span class="dot">/</span><span>Alo Yoga</span><span class="dot">/</span><span>Volcom</span><span class="dot">/</span><span>Cole Haan</span><span class="dot">/</span><span>Skechers</span><span class="dot">/</span>
+</div></div>
+
+<!-- WORK: ECOM -->
+<section class="work-section" id="work">
+  <div class="s-label" data-a>Selected work</div>
+  <div class="s-title" data-a data-d="1">Stores we <em>built</em>.</div>
+  <div class="work-track" data-a data-d="2">
+    <div class="work-card" data-project="alo"><div class="work-card-inner"><img src="images/work-alo-pdp.jpg" alt="Alo Yoga PDP" loading="lazy"><div class="work-overlay"><div class="overlay-text"><strong>Alo Yoga</strong><span>Complete the Look, loyalty program — Egypt</span><div class="view-project">View Project</div></div></div></div></div>
+    <div class="work-card" data-project="alo"><div class="work-card-inner"><img src="images/work-alo-style.jpg" alt="Alo Yoga Style" loading="lazy"><div class="work-overlay"><div class="overlay-text"><strong>Alo Yoga</strong><span>Style Inspiration — UGC cross-sell</span><div class="view-project">View Project</div></div></div></div></div>
+    <div class="work-card" data-project="alo"><div class="work-card-inner"><img src="images/work-alo-mobile.jpg" alt="Alo Yoga Mobile" loading="lazy"><div class="work-overlay"><div class="overlay-text"><strong>Alo Yoga</strong><span>Mobile-first — Shop the Look</span><div class="view-project">View Project</div></div></div></div></div>
+    <div class="work-card" data-project="alo"><div class="work-card-inner"><img src="images/work-alo-complete.jpg" alt="Alo Yoga Complete" loading="lazy"><div class="work-overlay"><div class="overlay-text"><strong>Alo Yoga</strong><span>Complete product experience</span><div class="view-project">View Project</div></div></div></div></div>
+    <div class="work-card" data-project="volcom"><div class="work-card-inner"><img src="images/work-volcom-collection.jpg" alt="Volcom Collection" loading="lazy"><div class="work-overlay"><div class="overlay-text"><strong>Volcom Spain</strong><span>Collection pages — filter &amp; sort</span><div class="view-project">View Project</div></div></div></div></div>
+    <div class="work-card" data-project="volcom"><div class="work-card-inner"><img src="images/work-volcom-pdp.jpg" alt="Volcom PDP" loading="lazy"><div class="work-overlay"><div class="overlay-text"><strong>Volcom Spain</strong><span>Product detail — Klarna, Get the Fit</span><div class="view-project">View Project</div></div></div></div></div>
+    <div class="work-card" data-project="volcom"><div class="work-card-inner"><img src="images/work-volcom-pdp-mobile.jpg" alt="Volcom Mobile" loading="lazy"><div class="work-overlay"><div class="overlay-text"><strong>Volcom Spain</strong><span>Mobile product detail</span><div class="view-project">View Project</div></div></div></div></div>
+    <div class="work-card" data-project="volcom"><div class="work-card-inner"><img src="images/work-volcom-grid.jpg" alt="Volcom Grid" loading="lazy"><div class="work-overlay"><div class="overlay-text"><strong>Volcom Spain</strong><span>Product grid — responsive layout</span><div class="view-project">View Project</div></div></div></div></div>
+    <div class="work-card" data-project="volcom"><div class="work-card-inner"><img src="images/work-volcom-mobile.jpg" alt="Volcom Mobile" loading="lazy"><div class="work-overlay"><div class="overlay-text"><strong>Volcom Spain</strong><span>Full mobile experience</span><div class="view-project">View Project</div></div></div></div></div>
+    <div class="work-card" data-project="oshoplin"><div class="work-card-inner"><img src="images/work-oshoplin-desktop.jpg" alt="Oshoplin Desktop" loading="lazy"><div class="work-overlay"><div class="overlay-text"><strong>Oshoplin</strong><span>CK-inspired multi-brand ecommerce</span><div class="view-project">View Project</div></div></div></div></div>
+    <div class="work-card" data-project="oshoplin"><div class="work-card-inner"><img src="images/work-oshoplin-grid.jpg" alt="Oshoplin Grid" loading="lazy"><div class="work-overlay"><div class="overlay-text"><strong>Oshoplin</strong><span>Product grid — brand filters</span><div class="view-project">View Project</div></div></div></div></div>
+    <div class="work-card" data-project="oshoplin"><div class="work-card-inner"><img src="images/work-oshoplin-mobile.jpg" alt="Oshoplin Mobile" loading="lazy"><div class="work-overlay"><div class="overlay-text"><strong>Oshoplin</strong><span>Mobile — responsive grid</span><div class="view-project">View Project</div></div></div></div></div>
+  </div>
+  <div class="work-hint" data-a>Drag to explore &middot; Click to view project</div>
+</section>
+
+<!-- BRAND & DESIGN WORK -->
+<section class="brand-section" id="design-work">
+  <div class="s-label" data-a>Design & Branding</div>
+  <div class="s-title" data-a data-d="1">Brands we <em>shaped</em>.</div>
+  <div class="brand-track" data-a data-d="2">
+    <div class="brand-card" data-project="handler"><img src="images/brand-handler-page.jpg" alt="Handler Auto" loading="lazy"><div class="bc-info"><div class="bc-name">Handler Auto Service</div><div class="bc-type">Brand Identity &middot; Portfolio</div></div></div>
+    <div class="brand-card" data-project="end"><img src="images/brand-end-page.jpg" alt="End Brand" loading="lazy"><div class="bc-info"><div class="bc-name">end.</div><div class="bc-type">Brand Guidelines &middot; Visual System</div></div></div>
+    <div class="brand-card" data-project="guesswhat"><img src="images/brand-guesswhat.jpg" alt="Guess What" loading="lazy"><div class="bc-info"><div class="bc-name">Guess What</div><div class="bc-type">Website Visual System &middot; Fashion</div></div></div>
+    <div class="brand-card" data-project="sloth"><img src="images/brand-sloth-cover.jpg" alt="Sloth" loading="lazy"><div class="bc-info"><div class="bc-name">Sloth</div><div class="bc-type">Brand Identity &middot; Soft Furniture</div></div></div>
+    <div class="brand-card" data-project="sloth"><img src="images/brand-sloth-page.jpg" alt="Sloth Guidelines" loading="lazy"><div class="bc-info"><div class="bc-name">Sloth</div><div class="bc-type">Brand Essence &middot; Tone of Voice</div></div></div>
+    <div class="brand-card" data-project="mas"><img src="images/design-mas-mood.jpg" alt="MAS Mood Board" loading="lazy"><div class="bc-info"><div class="bc-name">MAS SofaBed</div><div class="bc-type">Mood Board &middot; Visual Direction</div></div></div>
+    <div class="brand-card" data-project="mas"><img src="images/design-mas-social.jpg" alt="MAS Social Media" loading="lazy"><div class="bc-info"><div class="bc-name">MAS SofaBed</div><div class="bc-type">Social Media &middot; Content Design</div></div></div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-bg" id="lightboxBg"></div>
+  <button class="lightbox-close" id="lightboxClose">&times;</button>
+  <button class="lightbox-nav prev" id="lbPrev">&#8249;</button>
+  <button class="lightbox-nav next" id="lbNext">&#8250;</button>
+  <div class="lightbox-content">
+    <div class="lightbox-header"><h3 id="lbTitle"></h3><span id="lbType"></span></div>
+    <div class="lightbox-scroll" id="lbScroll"></div>
+  </div>
+  <div class="lightbox-counter" id="lbCounter"></div>
+</div>
+
+<!-- TEAM -->
+<div class="who-section" id="team">
+  <div class="who-card" data-a>
+    <div class="who-head">
+      <div class="who-avatar"><img src="images/designer-head.png" alt="Alerta"></div>
+      <div><h3><em>Alerta</em></h3><div class="who-role">Art Director</div></div>
+    </div>
+    <p>Every brand has a visual language waiting to be uncovered. Alerta's eye finds it — in the tension between a typeface and whitespace, in the exact warmth of a color that makes a brand feel lived-in rather than manufactured. She directs with instinct sharpened by five years of relentless creative output.</p>
+    <p>From the raw industrial honesty of Handler's identity to the quiet sophistication of end.'s visual system, from Sloth's soft-spoken brand world to Guess What's editorial energy — she shapes the visual DNA that makes brands unmistakably themselves. No trends. No templates. Pure visual conviction.</p>
+    <div class="tags"><span class="tag">Art Direction</span><span class="tag">Visual Identity</span><span class="tag">Brand Systems</span><span class="tag">Typography</span><span class="tag">Editorial Design</span><span class="tag">Packaging</span></div>
+    <div class="who-body"><img src="images/designer-full.png" alt="Alerta"></div>
+  </div>
+  <div class="who-card" data-a data-d="1">
+    <div class="who-head">
+      <div class="who-avatar"><img src="images/developer-head.png" alt="Mamdouh"></div>
+      <div><h3>Mamdouh</h3><div class="who-role">Head of Development</div></div>
+    </div>
+    <p>9+ years in front-end development. 8 years deep in Shopify. Mamdouh has built ecommerce experiences for brands across Egypt, the US, UK, and Spain. He thinks in conversion funnels, builds in clean code, and ships stores that turn browsers into buyers.</p>
+    <p>He's worked on Alo Yoga's cross-selling engine, Volcom's full collection and product pages, Oshoplin's CK-inspired multi-brand store, Cole Haan's global platform, Pier 1, Koi Footwear, and The Brandery — plus Skechers, ECCO, Umbro, ANT, and Cizaro in Egypt.</p>
+    <div class="tags"><span class="tag">Shopify</span><span class="tag">Headless</span><span class="tag">Front-End</span><span class="tag">Liquid</span><span class="tag">React</span><span class="tag">Ecom Strategy</span></div>
+    <div class="who-body"><img src="images/developer-full.png" alt="Mamdouh"></div>
+  </div>
+  <div class="who-card" data-a data-d="2">
+    <div class="who-head">
+      <div class="who-avatar"><img src="images/alaa character face.png" alt="Alaa"></div>
+      <div><h3>Alaa</h3><div class="who-role">Head of Media Buying</div></div>
+    </div>
+    <p>7 years engineering high-ROAS campaigns across Egypt, Kuwait, Saudi Arabia, and UAE. Alaa doesn't run ads — he builds revenue machines. From scaling Ashya Egypt 16× in 18 months (EGP 260K → EGP 4.2M/month) to hitting 16× ROAS for Capital Office Furniture and driving app install costs down 80%.</p>
+    <p>He's managed media across Meta, Google, TikTok, Snapchat, and programmatic — always treating every budget line as a business investment, not a spend. Fashion, F&B, automotive, hospitality, apps — every category, every funnel.</p>
+    <div class="tags"><span class="tag">Meta Ads</span><span class="tag">Google Ads</span><span class="tag">TikTok</span><span class="tag">Snapchat</span><span class="tag">Programmatic</span><span class="tag">Performance</span></div>
+    <div class="alaa-stats">
+      <div class="alaa-stat"><div class="stat-val">16×</div><div class="stat-label">Peak ROAS</div></div>
+      <div class="alaa-stat"><div class="stat-val">7+</div><div class="stat-label">Years</div></div>
+      <div class="alaa-stat"><div class="stat-val">3</div><div class="stat-label">Markets</div></div>
+      <div class="alaa-stat"><div class="stat-val">20+</div><div class="stat-label">Brands</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="s-label" data-a>What we do</div>
+  <div class="s-title" data-a data-d="1">Three services. No <em>distractions</em>.</div>
+  <div class="srv-list">
+    <div class="srv" data-a><div class="srv-num">01</div><div><div class="srv-name">Ecommerce Development</div><div class="srv-sub">Think &rarr; Innovate &rarr; Execute</div></div><div class="srv-desc">We sit with your team, study your customer, stress-test your UX, and build a Shopify store (or headless setup) that actually converts. We've done it for Alo Yoga, Cole Haan, Pier 1, Koi Footwear, Volcom — every page performance-optimized, every checkout flow tested, every pixel earning its place.</div></div>
+    <div class="srv" data-a><div class="srv-num">02</div><div><div class="srv-name">Design</div><div class="srv-sub">Your vision &rarr; Our execution</div></div><div class="srv-desc">Your marketing team has the strategy — we have the hands. From social media creatives to brand guidelines, packaging to campaign visuals, we design fast and at the quality your brand demands. Handler, end., Sloth, Guess What, MAS — they trust us to execute without ego or delays.</div></div>
+    <div class="srv" data-a><div class="srv-num">03</div><div><div class="srv-name">Media Buying</div><div class="srv-sub">Your strategy &rarr; Our scale</div></div><div class="srv-desc">You set the direction, we optimize the spend. Meta, TikTok, Google, Snapchat — we manage campaigns across platforms, delivering the ROAS your brand needs. From 16× ROAS on furniture to scaling fashion brands 16× in revenue. We execute with precision, test creatives fast, and scale what works.</div></div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section class="clients-section" id="clients">
+  <div class="s-label" data-a>Who we've worked with</div>
+  <div class="s-title" data-a data-d="1">20+ brands across <em>two continents</em>.</div>
+  <div class="cl-grid">
+    <div class="cl-row" data-a><div class="cl-row-label">Ecommerce — International</div><div class="cl-names"><span class="cl-pill">Alo Yoga</span><span class="cl-pill">Cole Haan</span><span class="cl-pill">Pier 1</span><span class="cl-pill">Koi Footwear</span><span class="cl-pill">Volcom</span><span class="cl-pill">The Brandery</span></div></div>
+    <div class="cl-row" data-a><div class="cl-row-label">Ecommerce — Egypt</div><div class="cl-names"><span class="cl-pill">Skechers</span><span class="cl-pill">ECCO</span><span class="cl-pill">Umbro</span><span class="cl-pill">ANT</span><span class="cl-pill">Cizaro</span><span class="cl-pill">Oshoplin</span></div></div>
+    <div class="cl-row" data-a><div class="cl-row-label">Design & Media Buying</div><div class="cl-names"><span class="cl-pill">Capital Office Furniture</span><span class="cl-pill">MAS SofaBed</span><span class="cl-pill">Handler Auto Service</span><span class="cl-pill">Guess What</span><span class="cl-pill">Ashya Egypt</span><span class="cl-pill">Ashya UAE</span><span class="cl-pill">Maile</span><span class="cl-pill">UNSTMPD</span><span class="cl-pill">Havva Dose</span><span class="cl-pill">Hunna World</span><span class="cl-pill">am:pm Coffee</span><span class="cl-pill">The Turkish Street</span></div></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="s-label" data-a>How we work</div>
+  <div class="s-title" data-a data-d="1">Two modes. One <em>standard</em>.</div>
+  <div class="proc-grid">
+    <div class="proc-col" data-a="left"><h3>Ecom Development</h3><p>For ecommerce, we go deep. We become part of your team, understand your customer, then architect and build a store that converts.</p><div class="p-step"><strong>01 — Think</strong><span>Deep-dive into brand, market, and customer behavior.</span></div><div class="p-step"><strong>02 — Innovate</strong><span>UX patterns, conversion flows, and tech decisions that move the needle.</span></div><div class="p-step"><strong>03 — Execute</strong><span>Clean code, fast pages, tested checkout. Shipped and live.</span></div></div>
+    <div class="proc-col" data-a="right"><h3>Design & Media</h3><p>We're your in-house execution arm. No strategy layers, no account managers. You brief, we deliver. That's it.</p><div class="p-step"><strong>01 — Brief in</strong><span>You share the vision, brand guidelines, and deliverables.</span></div><div class="p-step"><strong>02 — Execute</strong><span>We build, design, launch. No unnecessary meetings. No fluff.</span></div></div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<div class="numbers">
+  <div data-a><div class="n-val">20+</div><div class="n-label">Brands Served</div></div>
+  <div data-a data-d="1"><div class="n-val">9+</div><div class="n-label">Years in Dev</div></div>
+  <div data-a data-d="2"><div class="n-val">3</div><div class="n-label">Continents</div></div>
+  <div data-a data-d="3"><div class="n-val">0</div><div class="n-label">Fluff</div></div>
+</div>
+
+<!-- CTA -->
+<section class="cta" id="contact">
+  <div class="s-label" data-a>Ready?</div>
+  <div class="s-title" data-a data-d="1" style="font-size:clamp(2.5rem,6vw,4.5rem)">Let's build something<br><em>that ships</em>.</div>
+  <a href="mailto:hello@band.agency" class="cta-btn" data-a data-d="2">Get in touch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  <p class="cta-sub" data-a data-d="3">hello@band.agency &middot; Cairo, Egypt</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>&copy; 2026 band. All rights reserved.</span>
+  <div class="f-links"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+</footer>
+
+<script>
+// ===== PROJECT DATA =====
+const projects = {
+  alo: { title: 'Alo Yoga', type: 'Ecommerce Development — Egypt Region', images: [
+    'images/work-alo-pdp.jpg','images/work-alo-style.jpg','images/work-alo-mobile.jpg','images/work-alo-complete.jpg',
+    'images/Screenshot 2026-06-04 at 4.14.38 AM.png','images/Screenshot 2026-06-04 at 4.15.04 AM.png','images/Screenshot 2026-06-04 at 4.15.58 AM.png'
+  ]},
+  volcom: { title: 'Volcom Spain', type: 'Ecommerce Development — Spain', images: [
+    'images/work-volcom-collection.jpg','images/work-volcom-pdp.jpg','images/work-volcom-pdp-mobile.jpg','images/work-volcom-grid.jpg','images/work-volcom-mobile.jpg',
+    'images/Screenshot 2026-06-04 at 4.16.32 AM.png','images/Screenshot 2026-06-04 at 4.16.42 AM.png','images/Screenshot 2026-06-04 at 4.17.02 AM.png','images/Screenshot 2026-06-04 at 4.17.28 AM.png'
+  ]},
+  oshoplin: { title: 'Oshoplin', type: 'Multi-Brand Ecommerce — Egypt', images: [
+    'images/work-oshoplin-desktop.jpg','images/work-oshoplin-grid.jpg','images/work-oshoplin-mobile.jpg',
+    'images/Screenshot 2026-06-04 at 4.17.45 AM.png','images/Screenshot 2026-06-04 at 4.18.13 AM.png'
+  ]},
+  handler: { title: 'Handler Auto Service', type: 'Brand Identity & Portfolio', images: [
+    'images/brand-handler-page.jpg','images/pdf-handler portfolio (1-p1.png','images/pdf-handler portfolio (1-p2.png','images/pdf-handler portfolio (1-p3.png'
+  ]},
+  end: { title: 'end.', type: 'Brand Guidelines & Visual System', images: [
+    'images/brand-end-page.jpg','images/pdf-end. - Brand Guideli-p1.png','pdf-end. - Brand Guideli-p2.png','images/pdf-end. - Brand Guideli-p3.png'
+  ]},
+  guesswhat: { title: 'Guess What', type: 'Website Visual System — Fashion', images: [
+    'images/brand-guesswhat.jpg','pdf-guess what website v-p1.png'
+  ]},
+  sloth: { title: 'Sloth', type: 'Brand Identity — Soft Furniture', images: [
+    'images/brand-sloth-cover.jpg','images/brand-sloth-page.jpg','images/pdf-Sloth Brand Guidelin-p1.png','images/pdf-Sloth Brand Guidelin-p2.png','images/pdf-Sloth Brand Guidelin-p3.png'
+  ]},
+  mas: { title: 'MAS SofaBed', type: 'Mood Board & Content Design', images: [
+    'images/design-mas-mood.jpg','images/design-mas-social.jpg'
+  ]}
+};
+
+const projectKeys = Object.keys(projects);
+let currentProjectIdx = -1;
+
+// ===== LIGHTBOX =====
+const lb = document.getElementById('lightbox');
+const lbScroll = document.getElementById('lbScroll');
+const lbTitle = document.getElementById('lbTitle');
+const lbType = document.getElementById('lbType');
+const lbCounter = document.getElementById('lbCounter');
+
+function openLightbox(key) {
+  const p = projects[key];
+  if (!p) return;
+  currentProjectIdx = projectKeys.indexOf(key);
+  lbTitle.textContent = p.title;
+  lbType.textContent = p.type;
+  lbScroll.innerHTML = '';
+  p.images.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.loading = 'lazy';
+    img.alt = p.title;
+    lbScroll.appendChild(img);
+  });
+  lbCounter.textContent = `${currentProjectIdx + 1} / ${projectKeys.length}`;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function navProject(dir) {
+  currentProjectIdx = (currentProjectIdx + dir + projectKeys.length) % projectKeys.length;
+  openLightbox(projectKeys[currentProjectIdx]);
+}
+
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+document.getElementById('lightboxBg').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', () => navProject(-1));
+document.getElementById('lbNext').addEventListener('click', () => navProject(1));
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') navProject(-1);
+  if (e.key === 'ArrowRight') navProject(1);
+});
+
+// Click handlers — prevent opening when dragging
+let dragStartX = 0;
+document.querySelectorAll('[data-project]').forEach(card => {
+  card.addEventListener('mousedown', e => { dragStartX = e.clientX; });
+  card.addEventListener('click', e => {
+    if (Math.abs(e.clientX - dragStartX) > 10) return;
+    openLightbox(card.dataset.project);
+  });
+});
+
+// ===== PRELOADER =====
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('preloader').classList.add('done');
+    // Reveal hero elements immediately
+    document.querySelectorAll('.hero [data-a]').forEach(el => el.classList.add('in'));
+    // Delay observer for rest of page so transitions work after preloader clears
+    setTimeout(() => {
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }});
+      }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+      document.querySelectorAll('[data-a]:not(.in)').forEach(el => obs.observe(el));
+    }, 300);
+  }, 2200);
+});
+
+// ===== NAV =====
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) { requestAnimationFrame(() => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+    ticking = false;
+  }); ticking = true; }
+}, { passive: true });
+
+// ===== MARQUEE =====
+const m = document.getElementById('marquee');
+let mp = 0;
+(function tick() { mp -= .4; if (mp <= -m.scrollWidth / 2) mp = 0; m.style.transform = `translateX(${mp}px)`; requestAnimationFrame(tick); })();
+
+// ===== SMOOTH ANCHOR =====
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+});
+
+// ===== DRAG-TO-SCROLL =====
+document.querySelectorAll('.work-track, .brand-track').forEach(track => {
+  let isDown = false, startX, scrollLeft;
+  track.addEventListener('mousedown', e => { isDown = true; track.style.cursor = 'grabbing'; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
+  track.addEventListener('mouseleave', () => { isDown = false; track.style.cursor = 'grab'; });
+  track.addEventListener('mouseup', () => { isDown = false; track.style.cursor = 'grab'; });
+  track.addEventListener('mousemove', e => { if (!isDown) return; e.preventDefault(); track.scrollLeft = scrollLeft - (e.pageX - track.offsetLeft - startX) * 1.5; });
+});
+
+// ===== PARALLAX HERO =====
+window.addEventListener('scroll', () => {
+  const s = window.scrollY;
+  const chars = document.querySelector('.hero-chars');
+  if (chars && s < window.innerHeight) chars.style.transform = `translateY(${s * 0.06}px)`;
+}, { passive: true });
+
+// ===== COUNTER ANIMATION =====
+const numObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const val = e.target.querySelector('.n-val');
+    if (!val || val.dataset.animated) return;
+    val.dataset.animated = '1';
+    const text = val.textContent, num = parseInt(text);
+    if (isNaN(num)) return;
+    const suffix = text.replace(/[0-9]/g, '');
+    let current = 0;
+    const step = Math.max(1, Math.floor(num / 30));
+    const interval = setInterval(() => { current += step; if (current >= num) { current = num; clearInterval(interval); } val.textContent = current + suffix; }, 35);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.numbers > div').forEach(el => numObs.observe(el));
+
+// ===== TILT ON WORK CARDS =====
+document.querySelectorAll('.work-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - .5;
+    const y = (e.clientY - r.top) / r.height - .5;
+    const inner = card.querySelector('.work-card-inner');
+    if (inner) inner.style.transform = `perspective(600px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(-6px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    const inner = card.querySelector('.work-card-inner');
+    if (inner) inner.style.transform = '';
+  });
+});
+</script>
+</body>
+</html>
